@@ -1,0 +1,128 @@
+Pod basic commands
+
+To list pod in default namespaces
+
+$ kubectl get pod
+
+To list the pod running in all namespaces
+
+$ kubectl get pod --all-namespaces
+
+to create the pod
+
+$ kubectl create podname --generator=run-pod/v1 --image=docker_image
+
+eg
+
+$ kubectl run testpod --generator=run-pod/v1 --image=nginx 
+
+To check the pod status
+
+$ kubectl get pod
+
+To dispay detailed information about pod and events
+
+$ kubectl describe pod testpod
+
+To list the nodes where the pod is running and pod ip details
+
+$ kubectl get pod -o wide
+
+To login to the pod containers
+
+$ kubectl exec -it testpod sh
+
+To delete the pod
+
+$ kubectl delete pod testpod 
+
+
+
+
+Create POD using Yaml file
+
+Generate the Yaml file using the kubectl command with dry-run option
+
+
+ kubectl run demopod --generator=run-pod/v1 --image=nginx --dry-run=client -o yaml
+
+save the output of the above command to a file
+
+kubectl run demopod --generator=run-pod/v1 --image=nginx --dry-run=client -o yaml > demopod.yaml
+
+Create the pod using yaml file
+
+$ kubectl apply -f demopod.yaml
+
+to list the pod 
+
+$ kubectl get pod
+
+to delete the pod 
+
+$ kubectl delete -f demopod.yaml
+
+Pod labels
+
+Pod labels are key value pair that we assigned to pod and provide meningful information to pod . POD labels are mandatory and ned to assigned to pod by the user
+
+To cretae the pod with user defined label
+$ kubectl run newpod --generator=run-pod/v1 --image=nginx -l app=nginx
+
+to list the pod labels
+
+$ kubectl get pod --show-labels
+
+create the pod using yaml file with labels
+
+modify the demopod.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tomee
+    env: dev
+    version: v1
+  name: demopod
+spec:
+  containers:
+  - image: nginx
+    name: demopod
+
+$ kubectl apply -f demopod.yaml
+
+
+To list the pod matching specific labels
+
+$  kubectl get pod -l app=tomee
+
+to overrite existing pod label
+
+$ kubectl label pod demopod app=web --overwrite
+
+to ad new pod label
+
+kubectl label pod demopod role=webserver
+
+to delete the pod label
+
+ kubectl label pod demopod role-
+
+to list all the pod labels
+
+$ kubectl get pod --show-labels
+
+to delete all the pods
+
+$ kubectl delete pod --all
+
+
+
+
+
+
+
+
+
+
