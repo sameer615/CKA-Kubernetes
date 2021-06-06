@@ -1,2 +1,2 @@
-##### Certified Kubernetes Practice Sets
+# Certified Kubernetes Practice Sets
 ### This repository contains only labs
